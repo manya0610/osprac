@@ -1,9 +1,19 @@
+import random
+import sys
 from process import Process
-from functions import sortbyat, sortbyrt ,getInput
+from functions import sortbyat ,getInput,getRandomInput,avgwt,avgtat
 
 def rr():
-    processes=getInput()
-    timeslice=int(input("enter timeslice"))
+    choice=int(input("enter 1 for random input and 2 for user input"))
+    if choice not in [1, 2 ]:
+        print("Invalid choice!!")
+        sys.exit(-1)
+    if choice==1:
+        processes=getRandomInput()
+        timeslice=random.randint(0,5)
+    elif choice==2:     
+        processes=getInput()
+        timeslice=int(input("enter timeslice"))
     n=len(processes)
     sortbyat(processes)
     t=0
@@ -43,6 +53,7 @@ def rr():
                                        
         t+=1
     if(complete==n):
+        print("timeslice=",timeslice)
         print("Process | Arrival | Burst | compelete | Turn Around | Wait |")
         for j in completed:
             j.tat=j.ct-j.at
@@ -50,3 +61,5 @@ def rr():
             
             j.printdata() 
     print(gnattchart)
+    avgtat(completed)
+    avgwt(completed)

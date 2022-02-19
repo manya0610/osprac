@@ -1,30 +1,42 @@
 from audioop import reverse
+import random
+import sys
 from process import Process
-from functions import sortbyat ,getInput
+from functions import avgtat,avgwt
 
 
 def priority():
+    choice=int(input("enter 1 for random input and 2 for user input"))
+    if choice not in [1, 2 ]:
+        print("Invalid choice!!")
+        sys.exit(-1)
+    if choice==1:
+        n= int(input("Enter number of processes : "))
+        processes=[]
+        for i in range(n):
+            key = "P"+str(i+1)
+            a = random.randint(0,10)
+            b = random.randint(0,10)
+            c=random.randint(0,10)
+            processes.append(Process(key,a,b,c))
 
-    n= int(input("Enter number of processes : "))
-    processes=[]
+    elif choice==2:
+        n= int(input("Enter number of processes : "))
+        processes=[]
+        for i in range(n):
+            key = "P"+str(i+1)
+            a = int(input("Enter arrival time of process"+str(i+1)+": "))
+            b = int(input("Enter burst time of process"+str(i+1)+": "))
+            c = int(input("Enter priority  of process"+str(i+1)+": "))
+            processes.append(Process(key,a,b,c))
     completed=[]
     ready=[]
     gnattchart=""
     t=0
     complete=0
-    for i in range(n):
-        key = "P"+str(i+1)
-        a = int(input("Enter arrival time of process"+str(i+1)+": "))
-        b = int(input("Enter burst time of process"+str(i+1)+": "))
-        c = int(input("Enter priority  of process"+str(i+1)+": "))
-        processes.append(Process(key,a,b,c))
-
 
     def sortbypr(processes):
         processes.sort(key = lambda item:(item.priority), reverse=True)
-    def sortbyat(processes):
-        processes.sort(key = lambda item:(item.at))
-    sortbyat(processes)
 
     print("t=",t)
     while(complete!=n):
@@ -54,13 +66,15 @@ def priority():
 
         
     if(complete==n):
-        print("Process | Arrival | Burst | compelete | Turn Around | Wait |")
+        print("Process | Arrival | Burst | priority | compelete | Turn Around | Wait |")
         for j in completed:
             j.tat=j.ct-j.at
             j.wt=j.tat-j.bt
             
-            j.printdata() 
+            j.printdatap() 
     print(gnattchart)
+    avgtat(completed)
+    avgwt(completed)
                 
 
                 
