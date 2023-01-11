@@ -9,7 +9,8 @@ def sortbybt(processes):
 def sortbypr(processes):
     processes.sort(key = lambda item:(item.priority))
 
-
+#added comment
+print("ehllo")
 def getInput():
     n= int(input("Enter number of processes : "))
     processes=[]
